@@ -1,5 +1,5 @@
-module SampleCallConference
-  NGROK_ADDRESS = 'http://bd273e4d.ngrok.io'
+module SampleConferenceData
+  NGROK_ADDRESS = 'http://b898387b.ngrok.io'
   WORKER_ID = '1234'
   CONFERENCE_NAME = 'my_conference'
   CUSTOMER_NUMBER = '+447783433329'
