@@ -22,18 +22,36 @@ module ConferenceProcessor
       call_command("client:#{SampleConferenceData::WORKER_ID}")
     end
   end
-  class Conference     # def call_joined
+  class Conference
+    # def call_joined
     #   puts 'Call joined...'
     # end
 
     def self.status_changed(status)
       puts "status changed: #{status}"
       #binding.pry
-      if status["call_status"] == "in-progress" && status["called"] == "client:#{SampleConferenceData::WORKER_ID}"
-        #Call second leg
-        puts 'Second call leg...'
-        CallLog.call_command SampleConferenceData::CUSTOMER_NUMBER
+      if status["called"] == "client:#{SampleConferenceData::WORKER_ID}"
+        case status["call_status"]
+        when "in-progress"
+          #Call second leg
+          puts 'First call leg in progress ...'
+          CallLog.call_command SampleConferenceData::CUSTOMER_NUMBER
+        when "completed"
+          puts 'Consultant call ended...'
+        end
       end
+      if status["called"] == SampleConferenceData::CUSTOMER_NUMBER
+        case status["call_status"]
+        when "in-progress"
+          #Call second leg
+          puts 'Second call leg in progress...'
+        when "completed"
+          puts 'Customer call ended...'
+        end
+      end
+
+
+
     end
   end
 end
